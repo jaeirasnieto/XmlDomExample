@@ -278,15 +278,35 @@ public class DomMovies {
 				NamedNodeMap atributos = nodos.item(i).getAttributes();
 				Short anio = Short.valueOf(atributos.getNamedItem("anio").getNodeValue());
 				String titulo = getTituloOtraPelicula(nodos.item(i));
-				Reparto reparto = new Reparto();
+				String ip = getIpOtraPelicula(nodos.item(i));
 				otraPelicula.setAnio(anio);
 				otraPelicula.setTitulo(titulo);
+				otraPelicula.setIp(ip);
 			}
 		}
 		return otraPelicula;
 		
 	}
 	
+	private static String getTituloOtraPelicula(Node nodePelicula) throws Exception {
+		NodeList nodos = nodePelicula.getChildNodes();
+		for(int i = 0; i < nodos.getLength(); i++) {
+			if (nodos.item(i).getNodeName().equals("Titulo")) {
+				return nodos.item(i).getFirstChild().getNodeValue();
+			}
+		}
+		return null;
+	}
+	
+	private static String getIpOtraPelicula(Node nodePelicula) throws Exception {
+		NodeList nodos = nodePelicula.getChildNodes();
+		for(int i = 0; i < nodos.getLength(); i++) {
+			if (nodos.item(i).getNodeName().equals("ip")) {
+				return nodos.item(i).getFirstChild().getNodeValue();
+			}
+		}
+		return null;
+	}
 	
 	private static class MyErrorHandler implements ErrorHandler {
 	     
